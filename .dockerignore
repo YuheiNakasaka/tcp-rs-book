@@ -1,0 +1,5 @@
+target
+.vscode/
+.git/
+.DS_Store
+.dockerignore
