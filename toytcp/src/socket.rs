@@ -22,6 +22,8 @@ pub struct Socket {
     pub send_param: SendParam,
     pub recv_param: RecvParam,
     pub status: TcpStatus,
+    pub connected_connection_queue: VecDeque<SockID>,
+    pub listening_socket: Option<SockID>,
     pub sender: TransportSender,
 }
 
@@ -35,8 +37,8 @@ pub struct SendParam {
 
 #[derive(Clone, Debug)]
 pub struct RecvParam {
-    pub window: u16,
     pub next: u32,
+    pub window: u16,
     pub initial_seq: u32,
     pub tail: u32,
 }
@@ -94,12 +96,14 @@ impl Socket {
                 initial_seq: 0,
             },
             recv_param: RecvParam {
-                window: SOCKET_BUFFER_SIZE as u16,
                 next: 0,
+                window: SOCKET_BUFFER_SIZE as u16,
                 initial_seq: 0,
                 tail: 0,
             },
             status,
+            connected_connection_queue: VecDeque::new(),
+            listening_socket: None,
             sender,
         })
     }
