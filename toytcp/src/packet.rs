@@ -1,4 +1,3 @@
-use crate::tcp::TCP;
 use crate::tcpflags;
 use pnet::packet::{ip::IpNextHeaderProtocols, tcp::TcpPacket, Packet};
 use pnet::util;
